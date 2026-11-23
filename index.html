@@ -7,128 +7,108 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Rajdhani:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #050505;
-            --surface-color: rgba(18, 18, 22, 0.85);
-            --primary-silver: #f0f2f5;
-            --secondary-silver: #a8b0b8;
-            --accent-glow: #d0d8e0;
-            --text-main: #ffffff;
-            --text-muted: #b0b8c0;
-            --border-color: rgba(200, 210, 220, 0.15);
+            --bg-color: #030305;
+            --surface-color: rgba(15, 17, 21, 0.65);
+            --primary-silver: #ffffff;
+            --secondary-silver: #94a3b8;
+            --accent-glow: #38bdf8; /* Cinematic Blue/Cyan Glow */
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --glass-reflection: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 100%);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            scroll-behavior: smooth;
+            user-select: none; /* Prevents text highlighting for a more app-like feel */
         }
 
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
-            overflow: hidden; /* Prevents scrolling the whole body */
+            overflow: hidden; /* Disables normal scrolling */
+            height: 100vh;
+            width: 100vw;
         }
 
-        /* --- SMOKEY BACKGROUND EFFECTS --- */
-        .smoke-container {
+        /* --- STUDIO BACKGROUND EFFECTS --- */
+        .bg-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: -2;
+            z-index: -1;
             overflow: hidden;
-            pointer-events: none;
+        }
+
+        .bg-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            transform: perspective(500px) rotateX(60deg) scale(2) translateY(-20%);
+            animation: gridMove 10s linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 60px; }
         }
 
         .smoke {
             position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(200, 210, 220, 0.08) 0%, transparent 70%);
             border-radius: 50%;
-            filter: blur(80px);
-            animation: drift 20s infinite alternate ease-in-out;
+            filter: blur(100px);
+            opacity: 0.4;
+            animation: floatSmoke 20s infinite alternate ease-in-out;
         }
 
-        .smoke-1 { top: -10%; left: -10%; animation-duration: 25s; }
-        .smoke-2 { bottom: -10%; right: -10%; animation-duration: 30s; animation-delay: -5s; }
-        .smoke-3 { top: 40%; left: 30%; width: 800px; height: 800px; animation-duration: 35s; animation-delay: -10s; }
+        .smoke-1 { width: 600px; height: 600px; background: rgba(56, 189, 248, 0.1); top: -10%; left: -10%; }
+        .smoke-2 { width: 500px; height: 500px; background: rgba(255, 255, 255, 0.05); bottom: -10%; right: -10%; animation-delay: -5s; }
+        .smoke-3 { width: 800px; height: 800px; background: rgba(56, 189, 248, 0.05); top: 40%; left: 30%; animation-duration: 30s; }
 
-        @keyframes drift {
+        @keyframes floatSmoke {
             0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(50px, -50px) scale(1.1); }
-            100% { transform: translate(-30px, 30px) scale(0.9); }
+            100% { transform: translate(50px, 50px) scale(1.2); }
         }
 
-        /* --- FIXED BACKGROUND GRID --- */
-        .bg-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -3;
-            background-image: 
-                linear-gradient(rgba(200, 210, 220, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(200, 210, 220, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: moveGrid 20s linear infinite;
-        }
-
-        @keyframes moveGrid {
-            0% { background-position: 0 0; }
-            100% { background-position: 50px 50px; }
-        }
-
-        /* --- PAGE SECTIONS (Page-wise Navigation) --- */
-        .page-section {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 100px 10% 50px 10%;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        /* Custom Scrollbar for sections with lots of content */
-        .page-section::-webkit-scrollbar { width: 6px; }
-        .page-section::-webkit-scrollbar-track { background: transparent; }
-        .page-section::-webkit-scrollbar-thumb { background: var(--secondary-silver); border-radius: 3px; }
-
-        /* --- NAVBAR --- */
+        /* --- NAVIGATION --- */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 18px 4%;
+            padding: 20px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(5, 5, 8, 0.85);
-            backdrop-filter: blur(20px);
             z-index: 1000;
-            border-bottom: 1px solid rgba(200, 210, 220, 0.1);
+            background: linear-gradient(to bottom, rgba(3,3,5,0.9), transparent);
+            pointer-events: none;
         }
 
-        .nav-left { display: flex; align-items: center; gap: 30px; }
+        .nav-left, .nav-right { display: flex; align-items: center; gap: 30px; pointer-events: auto; }
 
         .nav-logo {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 700;
             color: var(--primary-silver);
             letter-spacing: 4px;
             text-transform: uppercase;
+            cursor: pointer;
         }
 
         .nav-logo span { color: var(--secondary-silver); font-weight: 400; }
 
-        .nav-links { display: flex; gap: 25px; align-items: center; }
+        .nav-links { display: flex; gap: 25px; background: rgba(255,255,255,0.03); padding: 10px 25px; border-radius: 30px; border: 1px solid var(--border-color); backdrop-filter: blur(10px); }
 
         .nav-links a {
             font-family: 'Rajdhani', sans-serif;
@@ -139,29 +119,28 @@
             letter-spacing: 1.5px;
             text-decoration: none;
             transition: 0.3s;
+            cursor: pointer;
         }
 
-        .nav-links a:hover { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
-
-        .nav-right { display: flex; align-items: center; gap: 25px; }
+        .nav-links a:hover, .nav-links a.active { color: #fff; text-shadow: 0 0 10px rgba(56, 189, 248, 0.5); }
 
         .nav-clock {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 8px 18px;
-            background: rgba(20, 22, 26, 0.9);
-            border: 1px solid rgba(200, 210, 220, 0.15);
-            border-radius: 6px;
             font-family: 'Space Mono', monospace;
             font-size: 13px;
             color: var(--secondary-silver);
+            background: rgba(0,0,0,0.5);
+            padding: 8px 15px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
         }
 
-        .nav-clock .time { color: #fff; font-weight: 700; letter-spacing: 2px; }
+        .nav-clock .time { color: var(--accent-glow); font-weight: 700; }
 
         .btn-resume {
-            padding: 9px 22px;
+            padding: 10px 24px;
             background: transparent;
             border: 1px solid var(--secondary-silver);
             color: var(--primary-silver);
@@ -174,79 +153,126 @@
             border-radius: 4px;
             font-size: 13px;
             text-decoration: none;
+            position: relative;
+            overflow: hidden;
         }
 
-        .btn-resume:hover {
-            background: var(--primary-silver);
-            color: var(--bg-color);
-            box-shadow: 0 0 20px rgba(220, 230, 240, 0.4);
+        .btn-resume::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
         }
 
-        /* --- HERO SECTION --- */
-        #home {
-            flex-direction: row;
+        .btn-resume:hover::before { left: 100%; }
+        .btn-resume:hover { background: #fff; color: #000; box-shadow: 0 0 20px rgba(56, 189, 248, 0.4); }
+
+        /* --- SLIDES SYSTEM --- */
+        .slides-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1); /* Smooth sliding */
+        }
+
+        .slide {
+            min-width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 100px 10%;
+            position: relative;
+        }
+
+        /* --- ANIMATIONS FOR SLIDES --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .slide.active .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide.active .reveal:nth-child(1) { transition-delay: 0.1s; }
+        .slide.active .reveal:nth-child(2) { transition-delay: 0.2s; }
+        .slide.active .reveal:nth-child(3) { transition-delay: 0.3s; }
+        .slide.active .reveal:nth-child(4) { transition-delay: 0.4s; }
+        .slide.active .reveal:nth-child(5) { transition-delay: 0.5s; }
+        .slide.active .reveal:nth-child(6) { transition-delay: 0.6s; }
+
+        /* --- SLIDE 1: HERO --- */
+        .hero-layout {
+            display: flex;
             align-items: center;
             justify-content: space-between;
+            width: 100%;
+            height: 100%;
         }
 
-        .hero-content { max-width: 600px; z-index: 2; }
+        .hero-text { max-width: 600px; z-index: 2; }
 
         .hero-tagline {
             font-family: 'Rajdhani', sans-serif;
-            color: var(--secondary-silver);
-            font-size: 15px;
-            font-weight: 600;
-            letter-spacing: 4px;
-            margin-bottom: 15px;
+            color: var(--accent-glow);
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
             text-transform: uppercase;
         }
 
         .hero-title {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 72px;
-            line-height: 1.05;
-            margin-bottom: 20px;
-            color: var(--primary-silver);
+            font-size: 85px;
+            line-height: 0.9;
+            margin-bottom: 25px;
+            color: #fff;
             text-transform: uppercase;
-            text-shadow: 2px 2px 0px #444, 4px 4px 0px #222, 0 0 40px rgba(200, 210, 220, 0.3);
+            text-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 50px rgba(56, 189, 248, 0.2);
         }
 
         .hero-subtitle {
-            font-size: 18px;
-            color: var(--text-muted);
+            font-size: 20px;
+            color: var(--text-main);
             margin-bottom: 30px;
-            border-left: 3px solid var(--primary-silver);
-            padding-left: 18px;
+            border-left: 3px solid var(--accent-glow);
+            padding-left: 20px;
             letter-spacing: 1px;
+            font-weight: 300;
         }
 
         .hero-desc { font-size: 15px; line-height: 1.9; color: var(--text-muted); margin-bottom: 40px; }
 
         .btn-primary {
-            padding: 15px 38px;
+            padding: 16px 40px;
             background: var(--primary-silver);
-            color: var(--bg-color);
+            color: #000;
             border: none;
-            border-radius: 4px;
             font-family: 'Rajdhani', sans-serif;
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 2.5px;
+            letter-spacing: 2px;
             cursor: pointer;
-            transition: 0.3s;
-            text-decoration: none;
+            transition: 0.4s;
             display: inline-block;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 10px 30px rgba(255,255,255,0.1);
         }
 
         .btn-primary:hover {
-            background: #fff;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 40px rgba(56, 189, 248, 0.4);
             transform: translateY(-3px);
+            background: var(--accent-glow);
+            color: #fff;
         }
 
-        /* --- CREATIVE MOVING PROFILE FRAME --- */
-        .hero-image-container {
+        /* --- CINEMATIC PROFILE HUD --- */
+        .profile-hud {
             position: relative;
             width: 450px;
             height: 450px;
@@ -255,216 +281,168 @@
             align-items: center;
         }
 
-        /* The actual image inside */
-        .profile-img {
-            width: 340px;
-            height: 340px;
+        .hud-img {
+            width: 320px;
+            height: 320px;
             border-radius: 50%;
             object-fit: cover;
             object-position: center 30%;
             z-index: 10;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 50px rgba(0,0,0,0.9), inset 0 0 30px rgba(0,0,0,0.8);
             background-color: #111;
         }
 
-        /* Moving Tech Rings behind the image */
-        .tech-ring {
+        /* Glowing rings */
+        .hud-ring {
             position: absolute;
             border-radius: 50%;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            pointer-events: none;
         }
 
-        .ring-1 {
-            width: 370px;
-            height: 370px;
-            border: 2px dashed rgba(200, 210, 220, 0.4);
-            animation: spin 25s linear infinite;
+        .hr-1 { width: 360px; height: 360px; border: 1px dashed rgba(255,255,255,0.2); animation: spin 30s linear infinite; }
+        .hr-2 { width: 400px; height: 400px; border: 1px solid transparent; border-top: 2px solid var(--accent-glow); border-bottom: 2px solid var(--accent-glow); animation: spin-reverse 15s linear infinite; opacity: 0.6;}
+        .hr-3 { width: 440px; height: 440px; border: 1px dotted rgba(255,255,255,0.1); animation: spin 45s linear infinite; }
+        
+        .hud-scan {
+            position: absolute; width: 100%; height: 100%; border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 70%, rgba(56, 189, 248, 0.4) 100%);
+            animation: spin 4s linear infinite; z-index: 5; pointer-events: none;
         }
 
-        .ring-2 {
-            width: 410px;
-            height: 410px;
-            border: 1px solid rgba(200, 210, 220, 0.1);
-            border-top: 2px solid rgba(220, 230, 240, 0.8);
-            border-bottom: 2px solid rgba(220, 230, 240, 0.8);
-            animation: spin-reverse 15s linear infinite;
-        }
+        .hud-node { position: absolute; width: 6px; height: 6px; background: #fff; border-radius: 50%; box-shadow: 0 0 15px 5px var(--accent-glow); }
+        .hn-1 { top: 0; left: 50%; transform: translateX(-50%); }
+        .hn-2 { bottom: 0; left: 50%; transform: translateX(-50%); }
 
-        .ring-3 {
-            width: 450px;
-            height: 450px;
-            border: 2px dotted rgba(200, 210, 220, 0.2);
-            animation: spin 40s linear infinite;
-        }
+        @keyframes spin { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+        @keyframes spin-reverse { 100% { transform: translate(-50%, -50%) rotate(-360deg); } }
 
-        .ring-orb {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.6);
-        }
-        .orb-1 { top: 0; left: 50%; transform: translateX(-50%); }
-        .orb-2 { bottom: 0; left: 50%; transform: translateX(-50%); }
-
-        @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-        @keyframes spin-reverse {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(-360deg); }
-        }
-
-        /* --- SECTION TITLES --- */
+        /* --- SLIDE 2: ABOUT --- */
         .section-title {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 40px;
-            margin-bottom: 40px;
-            color: var(--primary-silver);
+            font-size: 45px;
+            color: #fff;
             text-transform: uppercase;
             position: relative;
             display: inline-block;
+            margin-bottom: 50px;
         }
-
         .section-title::before {
-            content: '//';
-            color: var(--secondary-silver);
-            margin-right: 15px;
-            font-size: 26px;
+            content: '//'; color: var(--accent-glow); margin-right: 15px; font-size: 30px; vertical-align: middle;
         }
 
-        /* --- BANNER ANIMATION --- */
-        .banner-section {
-            padding: 0;
-            height: 40vh; /* Takes up 40% of screen height */
-            min-height: 300px;
-            overflow: hidden;
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #000;
-        }
-
-        .banner-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            animation: subtleZoom 20s infinite alternate ease-in-out;
-        }
-
-        @keyframes subtleZoom {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.1); }
-        }
-
-        /* --- CARDS --- */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-
-        .card {
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center;}
+        
+        .glass-card {
             background: var(--surface-color);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(20px);
             border: 1px solid var(--border-color);
-            padding: 35px;
-            border-radius: 8px;
-            transition: 0.4s ease;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding: 40px;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(220, 230, 240, 0.4);
-            box-shadow: 0 15px 40px rgba(200, 210, 220, 0.08);
+        .glass-card::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--glass-reflection); pointer-events: none;
         }
 
-        .card h3 {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: var(--primary-silver);
-            text-transform: uppercase;
+        .glass-card h3 {
+            font-family: 'Rajdhani', sans-serif; font-size: 26px; margin-bottom: 25px; color: #fff; text-transform: uppercase;
         }
 
-        .card p { color: var(--text-muted); font-size: 14px; line-height: 1.9; }
-
-        .tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+        .tags { display: flex; flex-wrap: wrap; gap: 12px; }
 
         .tag {
-            background: rgba(220, 230, 240, 0.06);
-            color: var(--primary-silver);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            border: 1px solid rgba(220, 230, 240, 0.15);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--secondary-silver);
+            padding: 8px 18px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: 'Space Mono', monospace;
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: 0.3s;
         }
 
-        /* --- TIMELINE --- */
-        .timeline { position: relative; max-width: 800px; margin: 0 auto; width: 100%; }
-        .timeline::after {
-            content: ''; position: absolute; width: 2px; background: linear-gradient(to bottom, transparent, #d0d8e0, transparent);
-            top: 0; bottom: 0; left: 20px;
+        .tag:hover {
+            background: rgba(56, 189, 248, 0.1);
+            border-color: var(--accent-glow);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(56, 189, 248, 0.2);
         }
 
+        /* --- SLIDE 3: EXPERIENCE --- */
+        .timeline-container { max-width: 800px; margin: 0 auto; width: 100%; height: 60vh; overflow-y: auto; padding-right: 20px;}
+        .timeline-container::-webkit-scrollbar { width: 4px; }
+        .timeline-container::-webkit-scrollbar-thumb { background: var(--accent-glow); border-radius: 4px; }
+        
         .timeline-item {
-            padding: 25px 30px;
-            background: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            margin-bottom: 25px;
-            margin-left: 50px;
-            position: relative;
+            padding: 30px; background: var(--surface-color); border: 1px solid var(--border-color);
+            border-left: 3px solid var(--accent-glow); border-radius: 0 8px 8px 0; margin-bottom: 25px; position: relative;
         }
 
-        .timeline-item::after {
-            content: ''; position: absolute; width: 14px; height: 14px; left: -38px; background-color: var(--bg-color);
-            border: 3px solid var(--primary-silver); top: 30px; border-radius: 50%; box-shadow: 0 0 15px #fff;
-        }
-
-        .timeline-date { font-family: 'Space Mono', monospace; color: var(--secondary-silver); font-size: 13px; margin-bottom: 5px; }
-        .timeline-title { font-family: 'Rajdhani', sans-serif; font-size: 22px; color: var(--primary-silver); margin-bottom: 5px; text-transform: uppercase; }
-        .timeline-subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 15px; font-weight: 600; }
+        .timeline-date { font-family: 'Space Mono', monospace; color: var(--accent-glow); font-size: 13px; margin-bottom: 10px; }
+        .timeline-title { font-family: 'Rajdhani', sans-serif; font-size: 24px; color: #fff; text-transform: uppercase; margin-bottom: 5px;}
+        .timeline-subtitle { color: var(--secondary-silver); font-size: 14px; font-weight: 600; margin-bottom: 15px; }
         .timeline-desc { font-size: 14px; line-height: 1.8; color: var(--text-muted); }
 
-        /* --- CERTS & CONTACT --- */
-        .cert-card {
-            display: flex; justify-content: space-between; align-items: center; padding: 25px;
-            background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 20px;
-        }
-        .cert-info h4 { font-family: 'Rajdhani', sans-serif; font-size: 20px; color: var(--primary-silver); text-transform: uppercase; }
-        .cert-info p { font-size: 14px; color: var(--text-muted); }
-        .cert-id { font-family: 'Space Mono', monospace; font-size: 13px; background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px; }
+        /* --- SLIDE 4: CERTS & BANNER --- */
+        .banner-wrapper { width: 100%; height: 250px; overflow: hidden; border-radius: 12px; margin-bottom: 40px; border: 1px solid var(--border-color); position: relative;}
+        .banner-img { width: 100%; height: 100%; object-fit: cover; animation: subtleZoom 20s infinite alternate; }
+        @keyframes subtleZoom { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
 
+        .cert-list { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 900px; margin: 0 auto;}
+        .cert-item {
+            display: flex; justify-content: space-between; align-items: center; padding: 20px 30px;
+            background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 8px; transition: 0.3s;
+        }
+        .cert-item:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.05); }
+        .cert-item h4 { font-family: 'Rajdhani', sans-serif; font-size: 20px; color: #fff; }
+        .cert-item p { color: var(--text-muted); font-size: 13px; }
+        .cert-id { font-family: 'Space Mono', monospace; color: var(--accent-glow); background: rgba(56,189,248,0.1); padding: 5px 12px; border-radius: 4px; font-size: 12px;}
+
+        /* --- SLIDE 5: CONTACT --- */
+        .contact-form { display: flex; flex-direction: column; gap: 20px; }
         input, textarea {
-            width: 100%; padding: 15px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); 
-            color: #fff; border-radius: 4px; font-family: 'Montserrat', sans-serif; margin-bottom: 20px;
+            width: 100%; padding: 15px; background: rgba(0,0,0,0.4); border: 1px solid var(--border-color);
+            color: #fff; font-family: 'Montserrat', sans-serif; border-radius: 6px; transition: 0.3s;
         }
-        input:focus, textarea:focus { outline: none; border-color: #fff; box-shadow: 0 0 10px rgba(255,255,255,0.3); }
+        input:focus, textarea:focus { outline: none; border-color: var(--accent-glow); box-shadow: 0 0 15px rgba(56,189,248,0.1); }
 
-        /* --- RESPONSIVE --- */
-        @media (max-width: 1100px) { .nav-links, .nav-clock { display: none; } }
+        /* --- SLIDE NAVIGATION BOTTOM ARROWS --- */
+        .slide-nav {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 20px; z-index: 1000;
+        }
+        .nav-btn {
+            width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color); color: #fff; display: flex; justify-content: center; align-items: center;
+            cursor: pointer; transition: 0.3s; backdrop-filter: blur(10px);
+        }
+        .nav-btn:hover { background: var(--accent-glow); color: #000; border-color: var(--accent-glow); box-shadow: 0 0 20px rgba(56,189,248,0.4); }
+
+        /* Responsive */
         @media (max-width: 992px) {
-            #home { flex-direction: column; text-align: center; justify-content: center; gap: 50px; }
-            .hero-title { font-size: 50px; }
+            .hero-layout { flex-direction: column; justify-content: center; text-align: center; gap: 40px; }
             .hero-subtitle { border-left: none; padding-left: 0; }
-            .hero-image-container { transform: scale(0.8); margin-top: 0; }
+            .hero-title { font-size: 55px; }
             .grid-2 { grid-template-columns: 1fr; }
-            .page-section { padding: 100px 5% 50px 5%; }
-            .cert-card { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .slide { padding: 80px 5%; }
+            .profile-hud { transform: scale(0.7); margin-top: 30px;}
+            .nav-links, .nav-clock { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Background Effects -->
-    <div class="bg-grid"></div>
-    <div class="smoke-container">
+    <!-- Studio Background -->
+    <div class="bg-container">
+        <div class="bg-grid"></div>
         <div class="smoke smoke-1"></div>
         <div class="smoke smoke-2"></div>
         <div class="smoke smoke-3"></div>
@@ -473,191 +451,255 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-left">
-            <div class="nav-logo">MD. RONI <span>MAHABUB</span></div>
+            <div class="nav-logo" onclick="goToSlide(0)">MD. RONI <span>MAHABUB</span></div>
             <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#skills">Skills</a>
-                <a href="#experience">Experience</a>
-                <a href="#certs">Certifications</a>
-                <a href="#contact">Contact</a>
+                <a onclick="goToSlide(0)" class="active">Home</a>
+                <a onclick="goToSlide(1)">About</a>
+                <a onclick="goToSlide(2)">Experience</a>
+                <a onclick="goToSlide(3)">Certifications</a>
+                <a onclick="goToSlide(4)">Contact</a>
             </div>
         </div>
         <div class="nav-right">
             <div class="nav-clock">
                 <span class="time" id="clock-time">00:00:00</span>
-                <span class="date" id="clock-date">MON, JAN 01</span>
+                <span id="clock-date">MON, JAN 01</span>
             </div>
             <a href="#" class="btn-resume">RESUME</a>
         </div>
     </nav>
 
-    <!-- PAGE 1: HERO -->
-    <section id="home" class="page-section">
-        <div class="hero-content">
-            <div class="hero-tagline">FUTURE-READY AI ENGINEER</div>
-            <h1 class="hero-title">MD. RONI<br>MAHABUB</h1>
-            <div class="hero-subtitle">Generative AI | RAG | LLM Applications</div>
-            <p class="hero-desc">
-                I am an AI Engineer specializing in Generative AI, Retrieval-Augmented Generation (RAG), LLM applications, Machine Learning, and Deep Learning. I build practical AI applications using Python, LangChain, LangGraph, Hugging Face, and modern LLM technologies.
-            </p>
-            <a href="#about" class="btn-primary">Explore My Work</a>
-        </div>
-        
-        <!-- Moving Profile Section -->
-        <div class="hero-image-container">
-            <!-- Rotating Tech Rings -->
-            <div class="tech-ring ring-1"><div class="ring-orb orb-1"></div></div>
-            <div class="tech-ring ring-2"><div class="ring-orb orb-2"></div></div>
-            <div class="tech-ring ring-3"></div>
-            
-            <!-- Your Image -->
-            <img src="profile.png" alt="Md. Roni Mahabub" class="profile-img" onerror="this.src='https://via.placeholder.com/340x340/1a1a1a/cccccc?text=Profile+Image'">
-        </div>
-    </section>
+    <!-- Sliding Container -->
+    <div class="slides-container" id="slides-container">
 
-    <!-- PAGE 2: BANNER (With Motion) -->
-    <section class="page-section banner-section" style="padding: 0; height: 40vh; min-height: 300px;">
-        <img src="banner.png" alt="Banner" class="banner-img" onerror="this.style.display='none'">
-    </section>
-
-    <!-- PAGE 3: ABOUT -->
-    <section id="about" class="page-section">
-        <h2 class="section-title">About Me</h2>
-        <div class="grid-2">
-            <div>
-                <p style="color: var(--text-muted); line-height: 1.9; font-size: 16px; margin-bottom: 20px;">
-                    My experience includes developing AI/ML solutions involving NLP, Computer Vision, predictive modeling, data analysis, and AI application deployment. I also have professional experience in AI/ML training and mentoring, which has strengthened my ability to explain technical concepts and build practical AI solutions.
-                </p>
-                <p style="color: var(--text-muted); line-height: 1.9; font-size: 16px;">
-                    Currently seeking opportunities as an AI Engineer, Generative AI Engineer, AI/ML Engineer, or Machine Learning Engineer.
-                </p>
-            </div>
-            <div class="card">
-                <h3>Core Expertise</h3>
-                <div class="tags">
-                    <span class="tag">Generative AI</span>
-                    <span class="tag">RAG</span>
-                    <span class="tag">LangChain</span>
-                    <span class="tag">LangGraph</span>
-                    <span class="tag">Hugging Face</span>
-                    <span class="tag">Machine Learning</span>
-                    <span class="tag">Deep Learning</span>
-                    <span class="tag">NLP</span>
-                    <span class="tag">Computer Vision</span>
-                    <span class="tag">Python</span>
-                    <span class="tag">FastAPI</span>
-                    <span class="tag">Git & GitHub</span>
+        <!-- SLIDE 0: HERO -->
+        <div class="slide active" id="slide-0">
+            <div class="hero-layout">
+                <div class="hero-text">
+                    <div class="hero-tagline reveal">FUTURE-READY AI ENGINEER</div>
+                    <h1 class="hero-title reveal">MD. RONI<br>MAHABUB</h1>
+                    <div class="hero-subtitle reveal">Generative AI | RAG | LLM Applications</div>
+                    <p class="hero-desc reveal">
+                        I am an AI Engineer specializing in Generative AI, Retrieval-Augmented Generation (RAG), LLM applications, Machine Learning, and Deep Learning. I build practical AI applications using Python, LangChain, LangGraph, Hugging Face, and modern LLM technologies.
+                    </p>
+                    <button onclick="goToSlide(1)" class="btn-primary reveal">Explore My Work</button>
+                </div>
+                
+                <div class="profile-hud reveal">
+                    <img src="profile.png" alt="Profile" class="hud-img" onerror="this.src='https://via.placeholder.com/320x320/1a1a1a/cccccc?text=Profile'">
+                    <div class="hud-ring hr-1"><div class="hud-node hn-1"></div></div>
+                    <div class="hud-ring hr-2"><div class="hud-node hn-2"></div></div>
+                    <div class="hud-ring hr-3"></div>
+                    <div class="hud-scan"></div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- PAGE 4: SKILLS -->
-    <section id="skills" class="page-section">
-        <h2 class="section-title">Technical Skills</h2>
-        <div class="grid-3">
-            <div class="card">
-                <h3>AI & Machine Learning</h3>
-                <p>Deep learning, NLP, predictive modeling, and intelligent system deployment.</p>
-                <div class="tags">
-                    <span class="tag">PyTorch</span><span class="tag">TensorFlow</span><span class="tag">Scikit-Learn</span>
-                    <span class="tag">Keras</span><span class="tag">Pandas</span><span class="tag">NumPy</span>
+        <!-- SLIDE 1: ABOUT & SKILLS -->
+        <div class="slide" id="slide-1">
+            <h2 class="section-title reveal">About & Expertise</h2>
+            <div class="grid-2">
+                <div class="reveal">
+                    <p style="color: var(--text-main); line-height: 1.9; font-size: 16px; margin-bottom: 20px; font-weight: 300;">
+                        My experience includes developing AI/ML solutions involving NLP, Computer Vision, predictive modeling, data analysis, and AI application deployment. I also have professional experience in AI/ML training and mentoring.
+                    </p>
+                    <p style="color: var(--text-muted); line-height: 1.9; font-size: 15px;">
+                        Currently seeking opportunities as an AI Engineer, Generative AI Engineer, AI/ML Engineer, or Machine Learning Engineer.
+                    </p>
+                </div>
+                <div class="glass-card reveal">
+                    <h3>Core Expertise</h3>
+                    <div class="tags">
+                        <span class="tag">Generative AI</span><span class="tag">RAG</span><span class="tag">LangChain</span>
+                        <span class="tag">LangGraph</span><span class="tag">Hugging Face</span><span class="tag">Machine Learning</span>
+                        <span class="tag">Deep Learning</span><span class="tag">NLP</span><span class="tag">Computer Vision</span>
+                        <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Git & GitHub</span>
+                    </div>
                 </div>
             </div>
-            <div class="card">
-                <h3>Generative AI & LLMs</h3>
-                <p>Building advanced AI applications and RAG architectures.</p>
-                <div class="tags">
-                    <span class="tag">LangChain</span><span class="tag">LangGraph</span><span class="tag">Hugging Face</span>
-                    <span class="tag">FastAPI</span><span class="tag">AWS</span>
+            <div class="grid-2" style="margin-top: 40px;">
+                <div class="glass-card reveal">
+                    <h3>AI & Machine Learning</h3>
+                    <p style="color:var(--text-muted); margin-bottom:15px; font-size:14px;">Deep learning, NLP, predictive modeling.</p>
+                    <div class="tags">
+                        <span class="tag">PyTorch</span><span class="tag">TensorFlow</span><span class="tag">Scikit-Learn</span>
+                        <span class="tag">Keras</span><span class="tag">Pandas</span><span class="tag">NumPy</span>
+                    </div>
+                </div>
+                <div class="glass-card reveal">
+                    <h3>Generative AI & Tools</h3>
+                    <p style="color:var(--text-muted); margin-bottom:15px; font-size:14px;">Building advanced AI architectures.</p>
+                    <div class="tags">
+                        <span class="tag">LangChain</span><span class="tag">LangGraph</span><span class="tag">FastAPI</span>
+                        <span class="tag">AWS</span><span class="tag">Docker</span><span class="tag">MLflow</span>
+                    </div>
                 </div>
             </div>
-            <div class="card">
-                <h3>Tools & Data Science</h3>
-                <p>Data analysis, visualization, and model management.</p>
-                <div class="tags">
-                    <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Docker</span>
-                    <span class="tag">MLflow</span><span class="tag">Matplotlib</span><span class="tag">Seaborn</span>
+        </div>
+
+        <!-- SLIDE 2: EXPERIENCE -->
+        <div class="slide" id="slide-2">
+            <h2 class="section-title reveal">Experience & Education</h2>
+            <div class="timeline-container reveal">
+                <div class="timeline-item">
+                    <div class="timeline-date">SEP 2026 - PRESENT</div>
+                    <h3 class="timeline-title">AI Engineer</h3>
+                    <div class="timeline-subtitle">E-Learning and Earning Ltd · Full-time</div>
+                    <div class="timeline-desc">Developing practical AI and Machine Learning solutions. Building Generative AI and RAG-based applications using LangChain, LangGraph, and Hugging Face. Implementing data preprocessing, model development, evaluation, and deployment workflows.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">JUN 2024 - JUN 2026</div>
+                    <h3 class="timeline-title">AI Trainer</h3>
+                    <div class="timeline-subtitle">Prime Tech Solutions Ltd. · Part-time</div>
+                    <div class="timeline-desc">Conducted training sessions on AI, ML, and Data Analytics under the BDSET Project. Trained and mentored 100+ learners. Developed customized AI curriculum and project-based workshops. Received 95% positive feedback.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">AUG 2025 - NOV 2025</div>
+                    <h3 class="timeline-title">Mentor</h3>
+                    <div class="timeline-subtitle">Rajshahi University Research Society (RURS)</div>
+                    <div class="timeline-desc">Supported students in research methodology, AI/ML fundamentals, Python, and project development. Guided students in research-oriented AI/ML projects.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2018 - 2023</div>
+                    <h3 class="timeline-title">B.Sc. in Computer Science and Engineering</h3>
+                    <div class="timeline-subtitle">Varendra University (VU), Rajshahi</div>
+                    <div class="timeline-desc">Developed a strong foundation in programming, data structures, databases, and AI. Focused on Python, Machine Learning, Deep Learning, NLP, and Computer Vision.</div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- PAGE 5: EXPERIENCE -->
-    <section id="experience" class="page-section">
-        <h2 class="section-title">Experience & Education</h2>
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-date">SEP 2026 - PRESENT</div>
-                <h3 class="timeline-title">AI Engineer</h3>
-                <div class="timeline-subtitle">E-Learning and Earning Ltd · Full-time</div>
-                <div class="timeline-desc">Developing practical AI and Machine Learning solutions. Building Generative AI and RAG-based applications using LangChain, LangGraph, and Hugging Face.</div>
+        <!-- SLIDE 3: CERTIFICATIONS & BANNER -->
+        <div class="slide" id="slide-3">
+            <h2 class="section-title reveal">Certifications</h2>
+            <div class="banner-wrapper reveal">
+                <!-- Replace banner.png with your actual banner image filename -->
+                <img src="banner.png" alt="Banner" class="banner-img" onerror="this.src='https://via.placeholder.com/1200x300/0a0a0a/333333?text=Your+Banner+Image+Here'">
             </div>
-            <div class="timeline-item">
-                <div class="timeline-date">JUN 2024 - JUN 2026</div>
-                <h3 class="timeline-title">AI Trainer</h3>
-                <div class="timeline-subtitle">Prime Tech Solutions Ltd. · Part-time</div>
-                <div class="timeline-desc">Conducted training sessions on AI, ML, and Data Analytics under the BDSET Project. Trained and mentored 100+ learners.</div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-date">2018 - 2023</div>
-                <h3 class="timeline-title">B.Sc. in Computer Science and Engineering (CSE)</h3>
-                <div class="timeline-subtitle">Varendra University (VU), Rajshahi</div>
-                <div class="timeline-desc">Developed a strong foundation in programming, data structures, databases, and AI.</div>
+            <div class="cert-list reveal">
+                <div class="cert-item">
+                    <div>
+                        <h4>AI in Immersive Technology – Level 6</h4>
+                        <p>National Skills Development Authority (NSDA) — Issued Jun 2026</p>
+                    </div>
+                    <div class="cert-id">SOA-ICT-AIIT-L6-001098</div>
+                </div>
+                <div class="cert-item">
+                    <div>
+                        <h4>Web Design and Development for Freelancing – Level 3</h4>
+                        <p>NSDA — Issued May 2025</p>
+                    </div>
+                    <div class="cert-id">NSC-ICT-WDDF-L3-001727</div>
+                </div>
+                <div class="cert-item">
+                    <div>
+                        <h4>Introduction to Generative AI Concepts</h4>
+                        <p>Microsoft Learn — Issued Jun 2025</p>
+                    </div>
+                    <div class="cert-id">mdronimahabub-42714</div>
+                </div>
+                <div class="cert-item">
+                    <div>
+                        <h4>Data Analysis with Python</h4>
+                        <p>IBM — Issued Jun 2025</p>
+                    </div>
+                    <div class="cert-id">DA0101EN</div>
+                </div>
             </div>
         </div>
-    </section>
 
-    <!-- PAGE 6: CERTS -->
-    <section id="certs" class="page-section">
-        <h2 class="section-title">Certifications</h2>
-        <div class="cert-card">
-            <div class="cert-info">
-                <h4>AI in Immersive Technology – Level 6</h4>
-                <p>NSDA (Issued Jun 2026)</p>
+        <!-- SLIDE 4: CONTACT -->
+        <div class="slide" id="slide-4">
+            <h2 class="section-title reveal">Let's Connect</h2>
+            <div class="grid-2">
+                <div class="reveal">
+                    <p style="color: var(--text-main); margin-bottom: 40px; line-height: 1.8; font-size: 18px; font-weight: 300;">
+                        Open to AI opportunities, collaborations, and conversations. Reach out through the form or via my social links.
+                    </p>
+                    <div style="margin-bottom: 20px;">
+                        <strong style="color: var(--accent-glow); font-family: 'Rajdhani', sans-serif; font-size: 18px;">Location:</strong> 
+                        <span style="color: var(--text-muted);">Rajshahi, Bangladesh</span>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <strong style="color: var(--accent-glow); font-family: 'Rajdhani', sans-serif; font-size: 18px;">LinkedIn:</strong> 
+                        <a href="#" style="color: #fff; text-decoration: none;">linkedin.com/in/md-roni-mahabub</a>
+                    </div>
+                    <div>
+                        <strong style="color: var(--accent-glow); font-family: 'Rajdhani', sans-serif; font-size: 18px;">GitHub:</strong> 
+                        <a href="#" style="color: #fff; text-decoration: none;">github.com/mdronimahabub</a>
+                    </div>
+                </div>
+                <div class="glass-card reveal">
+                    <form action="#" method="POST" class="contact-form">
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email" required>
+                        <textarea placeholder="Your Message" rows="4" required></textarea>
+                        <button type="submit" class="btn-primary" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
             </div>
-            <div class="cert-id">SOA-ICT-AIIT-L6-001098</div>
         </div>
-        <div class="cert-card">
-            <div class="cert-info">
-                <h4>Web Design and Development – Level 3</h4>
-                <p>NSDA (Issued May 2025)</p>
-            </div>
-            <div class="cert-id">NSC-ICT-WDDF-L3-001727</div>
-        </div>
-        <div class="cert-card">
-            <div class="cert-info">
-                <h4>Introduction to Generative AI Concepts</h4>
-                <p>Microsoft Learn (Issued Jun 2025)</p>
-            </div>
-            <div class="cert-id">mdronimahabub-42714</div>
-        </div>
-    </section>
 
-    <!-- PAGE 7: CONTACT -->
-    <section id="contact" class="page-section">
-        <h2 class="section-title">Let's Connect</h2>
-        <div class="grid-2">
-            <div>
-                <p style="color: var(--text-muted); margin-bottom: 30px;">Open to AI opportunities, collaborations, and conversations.</p>
-                <div style="margin-bottom: 15px;"><strong style="color: #fff;">Location:</strong> Rajshahi, Bangladesh</div>
-                <div style="margin-bottom: 15px;"><strong style="color: #fff;">LinkedIn:</strong> <a href="#" style="color: var(--secondary-silver);">linkedin.com/in/md-roni-mahabub</a></div>
-                <div><strong style="color: #fff;">GitHub:</strong> <a href="#" style="color: var(--secondary-silver);">github.com/mdronimahabub</a></div>
-            </div>
-            <div class="card">
-                <form action="#" method="POST">
-                    <input type="text" placeholder="Your Name" required>
-                    <input type="email" placeholder="Your Email" required>
-                    <textarea placeholder="Your Message" rows="3" required></textarea>
-                    <button type="submit" class="btn-primary" style="width: 100%;">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </section>
+    </div>
 
-    <!-- JS for Clock -->
+    <!-- Bottom Slide Navigation -->
+    <div class="slide-nav">
+        <button class="nav-btn" onclick="prevSlide()">←</button>
+        <button class="nav-btn" onclick="nextSlide()">→</button>
+    </div>
+
     <script>
+        // Slide Navigation Logic
+        let currentSlide = 0;
+        const totalSlides = 5;
+        const container = document.getElementById('slides-container');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const slides = document.querySelectorAll('.slide');
+
+        function goToSlide(index) {
+            if(index < 0 || index >= totalSlides) return;
+            
+            currentSlide = index;
+            // Move the container
+            container.style.transform = `translateX(-${currentSlide * 100}vw)`;
+            
+            // Update active classes for animations
+            slides.forEach((slide, i) => {
+                if(i === currentSlide) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            // Update nav links
+            navLinks.forEach((link, i) => {
+                if(i === currentSlide) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+        function nextSlide() {
+            if(currentSlide < totalSlides - 1) {
+                goToSlide(currentSlide + 1);
+            }
+        }
+
+        function prevSlide() {
+            if(currentSlide > 0) {
+                goToSlide(currentSlide - 1);
+            }
+        }
+
+        // Add keyboard support (Arrow keys)
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'ArrowRight' || e.key === 'ArrowDown') nextSlide();
+            if(e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevSlide();
+        });
+
+        // Live Clock
         function updateClock() {
             const now = new Date();
             const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -670,6 +712,9 @@
         }
         updateClock();
         setInterval(updateClock, 1000);
+
+        // Initialize first slide animation
+        setTimeout(() => { goToSlide(0); }, 100);
     </script>
 </body>
 </html>
