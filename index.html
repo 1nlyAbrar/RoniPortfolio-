@@ -7,14 +7,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Rajdhani:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #030305;
-            --surface-color: rgba(15, 17, 21, 0.7);
+            --bg-color: #030303;
+            --surface-color: rgba(20, 20, 22, 0.7);
             --primary-silver: #ffffff;
-            --secondary-silver: #94a3b8;
-            --accent-glow: #38bdf8; /* Cinematic Cyan */
+            --secondary-silver: #a1a1aa;
+            --accent-glow: #e2e8f0; /* Bright Silver/White Glow */
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --border-color: rgba(255, 255, 255, 0.1);
+            --border-color: rgba(255, 255, 255, 0.12);
         }
 
         * {
@@ -33,7 +33,7 @@
             width: 100vw;
         }
 
-        /* --- STUDIO BACKGROUND EFFECTS --- */
+        /* --- SILVER STUDIO BACKGROUND --- */
         .bg-container {
             position: fixed;
             top: 0;
@@ -42,7 +42,7 @@
             height: 100vh;
             z-index: -1;
             overflow: hidden;
-            background: radial-gradient(circle at 50% 50%, #0a0c10 0%, #030305 100%);
+            background: radial-gradient(circle at 50% 50%, #111 0%, #030303 100%);
         }
 
         .bg-grid {
@@ -50,12 +50,12 @@
             width: 100%;
             height: 100%;
             background-image: 
-                linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
             background-size: 60px 60px;
             transform: perspective(500px) rotateX(60deg) scale(2) translateY(-20%);
             animation: gridMove 10s linear infinite;
-            opacity: 0.6;
+            opacity: 0.5;
         }
 
         @keyframes gridMove {
@@ -63,28 +63,21 @@
             100% { background-position: 0 60px; }
         }
 
-        /* Floating Particles */
-        .particles {
+        .smoke {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            background: #fff;
             border-radius: 50%;
-            box-shadow: 0 0 10px 2px var(--accent-glow);
-            opacity: 0;
-            animation: floatUp 8s infinite linear;
+            filter: blur(100px);
+            opacity: 0.25;
+            animation: floatSmoke 20s infinite alternate ease-in-out;
+            background: #fff;
         }
+        .smoke-1 { width: 600px; height: 600px; top: -10%; left: -10%; }
+        .smoke-2 { width: 500px; height: 500px; bottom: -10%; right: -10%; animation-delay: -5s; }
+        .smoke-3 { width: 800px; height: 800px; top: 40%; left: 30%; animation-duration: 30s; opacity: 0.15; }
 
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            20% { opacity: 0.6; }
-            80% { opacity: 0.6; }
-            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        @keyframes floatSmoke {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 50px) scale(1.2); }
         }
 
         /* --- NAVIGATION --- */
@@ -97,7 +90,7 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: rgba(3, 3, 5, 0.6);
+            background: rgba(5, 5, 5, 0.7);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-color);
         }
@@ -131,7 +124,7 @@
             cursor: pointer;
         }
 
-        .nav-links a:hover, .nav-links a.active { color: #fff; text-shadow: 0 0 10px var(--accent-glow); }
+        .nav-links a:hover, .nav-links a.active { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
 
         .nav-clock {
             display: flex;
@@ -146,7 +139,7 @@
             border: 1px solid var(--border-color);
         }
 
-        .nav-clock .time { color: var(--accent-glow); font-weight: 700; text-shadow: 0 0 10px rgba(56,189,248,0.5); }
+        .nav-clock .time { color: #fff; font-weight: 700; text-shadow: 0 0 10px rgba(255,255,255,0.4); }
 
         .btn-resume {
             padding: 10px 24px;
@@ -162,11 +155,9 @@
             border-radius: 4px;
             font-size: 13px;
             text-decoration: none;
-            position: relative;
-            overflow: hidden;
         }
 
-        .btn-resume:hover { background: #fff; color: #000; box-shadow: 0 0 25px rgba(56, 189, 248, 0.5); border-color: #fff; }
+        .btn-resume:hover { background: #fff; color: #000; box-shadow: 0 0 20px rgba(255,255,255,0.3); border-color: #fff; }
 
         /* --- SLIDES SYSTEM --- */
         .slides-container {
@@ -195,129 +186,111 @@
         .slide.active .reveal:nth-child(4) { transition-delay: 0.4s; }
         .slide.active .reveal:nth-child(5) { transition-delay: 0.5s; }
 
-        /* --- SLIDE 0: SPECTACULAR HERO WITH BANNER --- */
-        #slide-0 {
-            padding: 0; /* Full width for banner */
-            position: relative;
-            justify-content: flex-end;
-            overflow: hidden;
-        }
-
-        /* The Banner Background */
-        .banner-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            z-index: 0;
-            animation: cinematicZoom 25s infinite alternate linear;
-            opacity: 0.8;
-        }
-
-        /* Vignette overlay to darken edges and make text pop */
-        .banner-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, rgba(3,3,5,0.4) 0%, rgba(3,3,5,0.95) 80%),
-                        linear-gradient(to top, rgba(3,3,5,1) 0%, transparent 50%);
-            z-index: 1;
-        }
-
-        @keyframes cinematicZoom {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.1); }
-        }
-
+        /* --- SLIDE 0: HOME WITH BANNER --- */
         .hero-layout {
-            position: relative;
-            z-index: 10;
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: 100%;
             height: 100%;
-            padding: 0 10%;
         }
 
-        .hero-text { max-width: 650px; z-index: 2; }
+        .hero-text-container {
+            max-width: 600px;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
 
         .hero-tagline {
             font-family: 'Rajdhani', sans-serif;
-            color: var(--accent-glow);
+            color: var(--secondary-silver);
             font-size: 16px;
             font-weight: 700;
             letter-spacing: 6px;
-            margin-bottom: 20px;
             text-transform: uppercase;
-            text-shadow: 0 0 15px rgba(56,189,248,0.5);
         }
 
         .hero-title {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 95px;
-            line-height: 0.85;
-            margin-bottom: 25px;
+            font-size: 85px;
+            line-height: 0.9;
             color: #fff;
             text-transform: uppercase;
-            text-shadow: 0 10px 40px rgba(0,0,0,1), 0 0 60px rgba(56, 189, 248, 0.3);
+            text-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 40px rgba(255,255,255,0.1);
         }
 
         .hero-subtitle {
-            font-size: 22px;
+            font-size: 20px;
             color: var(--text-main);
-            margin-bottom: 30px;
-            border-left: 4px solid var(--accent-glow);
+            border-left: 3px solid #fff;
             padding-left: 20px;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             font-weight: 300;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            margin-bottom: 10px;
         }
 
         .hero-desc {
-            font-size: 16px;
-            line-height: 1.9;
-            color: #cbd5e1;
-            margin-bottom: 40px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-            max-width: 550px;
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        /* The Banner Card */
+        .hero-banner-card {
+            width: 100%;
+            height: 180px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            margin-bottom: 20px;
+        }
+
+        .hero-banner-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            opacity: 0.9;
+            transition: 0.5s ease;
+        }
+
+        .hero-banner-card:hover img {
+            transform: scale(1.05);
+            opacity: 1;
         }
 
         .btn-primary {
-            padding: 18px 45px;
-            background: var(--primary-silver);
+            padding: 15px 35px;
+            background: #fff;
             color: #000;
             border: none;
             font-family: 'Rajdhani', sans-serif;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
             cursor: pointer;
-            transition: 0.4s;
-            display: inline-block;
-            position: relative;
-            z-index: 1;
-            box-shadow: 0 10px 30px rgba(255,255,255,0.2);
+            transition: 0.3s;
+            align-self: flex-start;
+            box-shadow: 0 5px 20px rgba(255,255,255,0.15);
         }
 
         .btn-primary:hover {
-            box-shadow: 0 10px 50px rgba(56, 189, 248, 0.6);
-            transform: translateY(-4px);
-            background: var(--accent-glow);
-            color: #fff;
+            box-shadow: 0 10px 40px rgba(255,255,255,0.4);
+            transform: translateY(-3px);
+            background: #e2e8f0;
         }
 
-        /* --- CINEMATIC PROFILE HUD --- */
+        /* --- SILVER PROFILE HUD --- */
         .profile-hud {
             position: relative;
-            width: 480px;
-            height: 480px;
+            width: 450px;
+            height: 450px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -325,14 +298,14 @@
         }
 
         .hud-img {
-            width: 340px;
-            height: 340px;
+            width: 320px;
+            height: 320px;
             border-radius: 50%;
             object-fit: cover;
             object-position: center 30%;
             z-index: 10;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 60px rgba(0,0,0,1), inset 0 0 40px rgba(0,0,0,0.8), 0 0 80px rgba(56, 189, 248, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 50px rgba(0,0,0,0.9), inset 0 0 30px rgba(0,0,0,0.8), 0 0 60px rgba(255, 255, 255, 0.1);
             background-color: #111;
         }
 
@@ -344,18 +317,17 @@
             transform: translate(-50%, -50%);
         }
 
-        .hr-1 { width: 390px; height: 390px; border: 1px dashed rgba(255,255,255,0.4); animation: spin 30s linear infinite; }
-        .hr-2 { width: 430px; height: 430px; border: 1px solid transparent; border-top: 3px solid var(--accent-glow); border-bottom: 3px solid var(--accent-glow); animation: spin-reverse 15s linear infinite; opacity: 0.8; box-shadow: 0 0 20px rgba(56,189,248,0.2);}
-        .hr-3 { width: 470px; height: 470px; border: 2px dotted rgba(255,255,255,0.15); animation: spin 45s linear infinite; }
+        .hr-1 { width: 360px; height: 360px; border: 1px dashed rgba(255,255,255,0.3); animation: spin 30s linear infinite; }
+        .hr-2 { width: 400px; height: 400px; border: 1px solid transparent; border-top: 2px solid #fff; border-bottom: 2px solid #fff; animation: spin-reverse 15s linear infinite; opacity: 0.6;}
+        .hr-3 { width: 440px; height: 440px; border: 2px dotted rgba(255,255,255,0.1); animation: spin 45s linear infinite; }
         
         .hud-scan {
             position: absolute; width: 100%; height: 100%; border-radius: 50%;
-            background: conic-gradient(from 0deg, transparent 70%, rgba(56, 189, 248, 0.5) 100%);
+            background: conic-gradient(from 0deg, transparent 80%, rgba(255, 255, 255, 0.3) 100%);
             animation: spin 4s linear infinite; z-index: 5; pointer-events: none;
-            box-shadow: 0 0 30px rgba(56,189,248,0.1);
         }
 
-        .hud-node { position: absolute; width: 8px; height: 8px; background: #fff; border-radius: 50%; box-shadow: 0 0 20px 6px var(--accent-glow); }
+        .hud-node { position: absolute; width: 6px; height: 6px; background: #fff; border-radius: 50%; box-shadow: 0 0 15px 5px rgba(255,255,255,0.5); }
         .hn-1 { top: 0; left: 50%; transform: translateX(-50%); }
         .hn-2 { bottom: 0; left: 50%; transform: translateX(-50%); }
 
@@ -371,9 +343,9 @@
             position: relative;
             display: inline-block;
             margin-bottom: 50px;
-            text-shadow: 0 0 20px rgba(255,255,255,0.2);
+            text-shadow: 0 0 20px rgba(255,255,255,0.1);
         }
-        .section-title::before { content: '//'; color: var(--accent-glow); margin-right: 15px; font-size: 30px; vertical-align: middle; }
+        .section-title::before { content: '//'; color: var(--secondary-silver); margin-right: 15px; font-size: 30px; vertical-align: middle; }
 
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center;}
         
@@ -396,14 +368,14 @@
             background: rgba(255, 255, 255, 0.03); color: var(--secondary-silver); padding: 8px 18px;
             border-radius: 4px; font-size: 13px; font-family: 'Space Mono', monospace; border: 1px solid rgba(255,255,255,0.08); transition: 0.3s;
         }
-        .tag:hover { background: rgba(56, 189, 248, 0.15); border-color: var(--accent-glow); color: #fff; transform: translateY(-3px); box-shadow: 0 5px 20px rgba(56, 189, 248, 0.3); }
+        .tag:hover { background: rgba(255, 255, 255, 0.1); border-color: #fff; color: #fff; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(255,255,255,0.1); }
 
         /* Timeline */
         .timeline-container { max-width: 800px; margin: 0 auto; width: 100%; height: 60vh; overflow-y: auto; padding-right: 20px;}
         .timeline-container::-webkit-scrollbar { width: 4px; }
-        .timeline-container::-webkit-scrollbar-thumb { background: var(--accent-glow); border-radius: 4px; }
-        .timeline-item { padding: 30px; background: var(--surface-color); border: 1px solid var(--border-color); border-left: 4px solid var(--accent-glow); border-radius: 0 8px 8px 0; margin-bottom: 25px; }
-        .timeline-date { font-family: 'Space Mono', monospace; color: var(--accent-glow); font-size: 13px; margin-bottom: 10px; }
+        .timeline-container::-webkit-scrollbar-thumb { background: var(--secondary-silver); border-radius: 4px; }
+        .timeline-item { padding: 30px; background: var(--surface-color); border: 1px solid var(--border-color); border-left: 3px solid #fff; border-radius: 0 8px 8px 0; margin-bottom: 25px; }
+        .timeline-date { font-family: 'Space Mono', monospace; color: var(--secondary-silver); font-size: 13px; margin-bottom: 10px; }
         .timeline-title { font-family: 'Rajdhani', sans-serif; font-size: 24px; color: #fff; text-transform: uppercase; margin-bottom: 5px;}
         .timeline-subtitle { color: var(--secondary-silver); font-size: 14px; font-weight: 600; margin-bottom: 15px; }
         .timeline-desc { font-size: 14px; line-height: 1.8; color: var(--text-muted); }
@@ -411,10 +383,10 @@
         /* Certs */
         .cert-list { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 900px; margin: 0 auto;}
         .cert-item { display: flex; justify-content: space-between; align-items: center; padding: 25px 30px; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 8px; transition: 0.3s; }
-        .cert-item:hover { border-color: rgba(56,189,248,0.4); background: rgba(56,189,248,0.05); transform: translateX(10px); }
+        .cert-item:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.05); transform: translateX(10px); }
         .cert-item h4 { font-family: 'Rajdhani', sans-serif; font-size: 20px; color: #fff; }
         .cert-item p { color: var(--text-muted); font-size: 13px; }
-        .cert-id { font-family: 'Space Mono', monospace; color: var(--accent-glow); background: rgba(56,189,248,0.1); padding: 6px 14px; border-radius: 4px; font-size: 12px; border: 1px solid rgba(56,189,248,0.2);}
+        .cert-id { font-family: 'Space Mono', monospace; color: #fff; background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 4px; font-size: 12px; border: 1px solid rgba(255,255,255,0.1);}
 
         /* Contact */
         .contact-form { display: flex; flex-direction: column; gap: 20px; }
@@ -422,7 +394,7 @@
             width: 100%; padding: 16px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color);
             color: #fff; font-family: 'Montserrat', sans-serif; border-radius: 6px; transition: 0.3s; font-size: 14px;
         }
-        input:focus, textarea:focus { outline: none; border-color: var(--accent-glow); box-shadow: 0 0 20px rgba(56,189,248,0.15); }
+        input:focus, textarea:focus { outline: none; border-color: #fff; box-shadow: 0 0 15px rgba(255,255,255,0.1); }
 
         /* --- SLIDE NAVIGATION BOTTOM ARROWS --- */
         .slide-nav {
@@ -430,21 +402,22 @@
             display: flex; gap: 20px; z-index: 1000;
         }
         .nav-btn {
-            width: 55px; height: 55px; border-radius: 50%; background: rgba(255,255,255,0.05);
+            width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.05);
             border: 1px solid var(--border-color); color: #fff; display: flex; justify-content: center; align-items: center;
-            cursor: pointer; transition: 0.3s; backdrop-filter: blur(10px); font-size: 20px;
+            cursor: pointer; transition: 0.3s; backdrop-filter: blur(10px); font-size: 18px;
         }
-        .nav-btn:hover { background: var(--accent-glow); color: #000; border-color: var(--accent-glow); box-shadow: 0 0 30px rgba(56,189,248,0.5); transform: scale(1.1); }
+        .nav-btn:hover { background: #fff; color: #000; border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.3); transform: scale(1.1); }
 
         /* Responsive */
         @media (max-width: 992px) {
-            .hero-layout { flex-direction: column; justify-content: center; text-align: center; gap: 40px; padding-top: 100px;}
+            .hero-layout { flex-direction: column; justify-content: center; text-align: center; gap: 30px; padding-top: 100px;}
             .hero-subtitle { border-left: none; padding-left: 0; }
             .hero-title { font-size: 60px; }
-            .hero-desc { margin: 0 auto 30px auto; }
+            .hero-text-container { align-items: center; }
+            .btn-primary { align-self: center; }
             .grid-2 { grid-template-columns: 1fr; }
             .slide { padding: 80px 5%; }
-            .profile-hud { transform: scale(0.7); margin-top: 30px;}
+            .profile-hud { transform: scale(0.7); margin-top: 0;}
             .nav-links, .nav-clock { display: none; }
         }
     </style>
@@ -454,7 +427,9 @@
     <!-- Studio Background -->
     <div class="bg-container">
         <div class="bg-grid"></div>
-        <div class="particles" id="particles"></div>
+        <div class="smoke smoke-1"></div>
+        <div class="smoke smoke-2"></div>
+        <div class="smoke smoke-3"></div>
     </div>
 
     <!-- Navigation -->
@@ -481,26 +456,28 @@
     <!-- Sliding Container -->
     <div class="slides-container" id="slides-container">
 
-        <!-- SLIDE 0: CINEMATIC HERO WITH BANNER -->
+        <!-- SLIDE 0: HOME WITH BANNER -->
         <div class="slide active" id="slide-0">
-            
-            <!-- The Full Background Banner -->
-            <img src="banner.png" alt="Banner Background" class="banner-bg" onerror="this.style.display='none'">
-            <div class="banner-overlay"></div>
-
             <div class="hero-layout">
-                <div class="hero-text">
+                
+                <div class="hero-text-container">
                     <div class="hero-tagline reveal">FUTURE-READY AI ENGINEER</div>
                     <h1 class="hero-title reveal">MD. RONI<br>MAHABUB</h1>
                     <div class="hero-subtitle reveal">Generative AI | RAG | LLM Apps</div>
+                    
+                    <!-- BANNER PLACED RIGHT HERE -->
+                    <div class="hero-banner-card reveal">
+                        <img src="banner.png" alt="Banner" onerror="this.style.display='none'">
+                    </div>
+
                     <p class="hero-desc reveal">
-                        I am an AI Engineer specializing in Generative AI, Retrieval-Augmented Generation (RAG), LLM applications, Machine Learning, and Deep Learning. I build practical AI applications using Python, LangChain, LangGraph, Hugging Face, and modern LLM technologies.
+                        I am an AI Engineer specializing in Generative AI, Retrieval-Augmented Generation (RAG), LLM applications, Machine Learning, and Deep Learning.
                     </p>
                     <button onclick="goToSlide(1)" class="btn-primary reveal">Explore My Work</button>
                 </div>
                 
                 <div class="profile-hud reveal">
-                    <img src="profile.png" alt="Profile" class="hud-img" onerror="this.src='https://via.placeholder.com/340x340/1a1a1a/cccccc?text=Profile'">
+                    <img src="profile.png" alt="Profile" class="hud-img" onerror="this.src='https://via.placeholder.com/320x320/1a1a1a/cccccc?text=Profile'">
                     <div class="hud-ring hr-1"><div class="hud-node hn-1"></div></div>
                     <div class="hud-ring hr-2"><div class="hud-node hn-2"></div></div>
                     <div class="hud-ring hr-3"></div>
@@ -608,16 +585,16 @@
                         Open to AI opportunities, collaborations, and conversations. Reach out through the form or via my social links.
                     </p>
                     <div style="margin-bottom: 20px;">
-                        <strong style="color: var(--accent-glow); font-family: 'Rajdhani', sans-serif; font-size: 20px;">Location:</strong> 
+                        <strong style="color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 20px;">Location:</strong> 
                         <span style="color: var(--text-muted); font-size: 16px;">Rajshahi, Bangladesh</span>
                     </div>
                     <div style="margin-bottom: 20px;">
-                        <strong style="color: var(--accent-glow); font-family: 'Rajdhani', sans-serif; font-size: 20px;">LinkedIn:</strong> 
-                        <a href="#" style="color: #fff; text-decoration: none; font-size: 16px;">linkedin.com/in/md-roni-mahabub</a>
+                        <strong style="color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 20px;">LinkedIn:</strong> 
+                        <a href="#" style="color: var(--secondary-silver); text-decoration: none; font-size: 16px;">linkedin.com/in/md-roni-mahabub</a>
                     </div>
                     <div>
-                        <strong style="color: var(--accent-glow); font-family: 'Rajdhani', sans-serif; font-size: 20px;">GitHub:</strong> 
-                        <a href="#" style="color: #fff; text-decoration: none; font-size: 16px;">github.com/mdronimahabub</a>
+                        <strong style="color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 20px;">GitHub:</strong> 
+                        <a href="#" style="color: var(--secondary-silver); text-decoration: none; font-size: 16px;">github.com/mdronimahabub</a>
                     </div>
                 </div>
                 <div class="glass-card reveal">
@@ -640,7 +617,7 @@
     </div>
 
     <script>
-        // --- 1. SLIDE NAVIGATION LOGIC ---
+        // Slide Navigation Logic
         let currentSlide = 0;
         const totalSlides = 5;
         const container = document.getElementById('slides-container');
@@ -678,7 +655,7 @@
             if(e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevSlide();
         });
 
-        // --- 2. LIVE CLOCK ---
+        // Live Clock
         function updateClock() {
             const now = new Date();
             const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -691,26 +668,6 @@
         }
         updateClock();
         setInterval(updateClock, 1000);
-
-        // --- 3. GENERATE FLOATING PARTICLES ---
-        function createParticles() {
-            const container = document.getElementById('particles');
-            for(let i = 0; i < 30; i++) {
-                let particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                // Random size, position, and animation delay
-                let size = Math.random() * 4 + 1;
-                particle.style.width = size + 'px';
-                particle.style.height = size + 'px';
-                particle.style.left = Math.random() * 100 + 'vw';
-                particle.style.animationDuration = (Math.random() * 5 + 5) + 's';
-                particle.style.animationDelay = Math.random() * 5 + 's';
-                
-                container.appendChild(particle);
-            }
-        }
-        createParticles();
 
         // Initialize first slide animation
         setTimeout(() => { goToSlide(0); }, 100);
