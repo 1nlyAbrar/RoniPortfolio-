@@ -3,24 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Md. Roni Mahabub | AI Engineer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <title>Md. Roni Mahabub | AI Architect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #050505;
-            --surface-color: rgba(15, 15, 15, 0.85);
-            --primary-silver: #f0f0f0;
-            --secondary-silver: #a0a0a0;
-            --accent-glow: #ffffff;
-            --text-main: #ffffff;
-            --text-muted: #888888;
+            --bg-color: #020202;
+            --surface-color: rgba(10, 10, 12, 0.7);
+            --primary-silver: #ffffff;
+            --secondary-silver: #888888;
+            --glow: #e0e0e0;
+            --text-main: #f0f0f0;
+            --text-muted: #999999;
             --border-color: rgba(255, 255, 255, 0.15);
+            --panel-bg: rgba(15, 15, 18, 0.85);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            cursor: crosshair; /* Advanced tech cursor */
+        }
+
+        /* Custom Holographic Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { 
+            background: var(--secondary-silver); 
+            border-radius: 4px; 
+            box-shadow: 0 0 10px var(--primary-silver); 
         }
 
         html {
@@ -34,530 +45,539 @@
             color: var(--text-main);
             overflow-x: hidden;
             position: relative;
-            /* High-tech background grid */
+        }
+
+        /* --- DYNAMIC HOLOGRAPHIC BACKGROUND --- */
+        .bg-container {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #111 0%, #020202 100%);
+        }
+
+        .cyber-grid {
+            position: absolute;
+            width: 200%; height: 200%;
+            top: -50%; left: -50%;
             background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
             background-size: 40px 40px;
-            background-position: center;
+            transform: perspective(500px) rotateX(60deg);
+            animation: gridMove 10s linear infinite;
         }
 
-        h1, h2, h3, h4, h5, h6, .nav-logo {
-            font-family: 'Rajdhani', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        @keyframes gridMove {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(40px); }
         }
 
-        /* --- Smooth Page Transition System --- */
-        .page-section {
-            min-height: 100vh;
-            padding: 120px 10% 80px 10%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            z-index: 2;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        .scan-line {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+            animation: scan 8s linear infinite;
+            z-index: 1;
         }
 
-        /* The smooth reveal animation applied via JS */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px) scale(0.98);
-            filter: blur(10px);
-            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        @keyframes scan {
+            0% { top: -5%; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 105%; opacity: 0; }
         }
 
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            filter: blur(0);
-        }
-
-        /* --- Navbar --- */
+        /* --- NAVIGATION --- */
         nav {
             position: fixed;
-            top: 0;
-            width: 100%;
+            top: 0; width: 100%;
             padding: 20px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(5, 5, 5, 0.8);
-            backdrop-filter: blur(15px);
+            background: rgba(2, 2, 2, 0.6);
+            backdrop-filter: blur(20px);
             z-index: 1000;
             border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.8);
         }
 
         .nav-logo {
-            font-size: 24px;
-            font-weight: 700;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 24px; font-weight: 700;
             color: var(--primary-silver);
-            letter-spacing: 3px;
+            letter-spacing: 4px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
         }
+        .nav-logo span { color: var(--secondary-silver); font-weight: 300; }
 
-        .nav-logo span {
-            color: var(--secondary-silver);
-            font-weight: 400;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-
+        .nav-links { display: flex; gap: 30px; }
         .nav-links a {
             text-decoration: none;
             color: var(--secondary-silver);
-            font-size: 14px;
-            font-weight: 600;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 13px; letter-spacing: 2px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
             transition: 0.3s;
+            position: relative;
         }
-
-        .nav-links a:hover {
-            color: var(--primary-silver);
+        .nav-links a:hover { color: var(--primary-silver); text-shadow: 0 0 10px #fff; }
+        .nav-links a::before {
+            content: '>'; position: absolute; left: -15px; opacity: 0; transition: 0.3s; color: #fff;
         }
+        .nav-links a:hover::before { opacity: 1; left: -10px; }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--primary-silver);
-            box-shadow: 0 0 10px var(--accent-glow);
-            transition: 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .btn-resume {
-            padding: 10px 20px;
+        .btn-nav {
+            padding: 10px 25px;
             background: transparent;
             border: 1px solid var(--secondary-silver);
             color: var(--primary-silver);
             font-family: 'Rajdhani', sans-serif;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: 0.3s;
-            border-radius: 4px;
-            text-decoration: none;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 2px;
+            cursor: pointer; transition: 0.4s;
+            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+        }
+        .btn-nav:hover {
+            background: var(--primary-silver); color: #000;
+            box-shadow: 0 0 30px rgba(255,255,255,0.4);
         }
 
-        .btn-resume:hover {
-            background: var(--primary-silver);
-            color: var(--bg-color);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+        /* --- SECTIONS & REVEAL ANIMATIONS --- */
+        section {
+            padding: 150px 10% 100px 10%;
+            min-height: 100vh;
+            position: relative;
+            z-index: 10;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+
+        .section-header {
+            margin-bottom: 60px;
+            position: relative;
         }
 
         .section-title {
-            font-size: 42px;
-            margin-bottom: 50px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 48px; font-weight: 700;
             color: var(--primary-silver);
-            position: relative;
+            text-transform: uppercase; letter-spacing: 5px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
             display: inline-block;
-            text-shadow: 2px 2px 0px #555, 4px 4px 0px #222, 0 0 20px rgba(255,255,255,0.3);
         }
 
         .section-title::before {
-            content: '//';
-            color: var(--secondary-silver);
-            margin-right: 15px;
-            font-size: 28px;
-            vertical-align: middle;
-            text-shadow: none;
+            content: 'SYS.SYS //';
+            display: block;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px; color: var(--secondary-silver); letter-spacing: 2px; margin-bottom: 5px;
         }
 
-        /* --- FUTURISTIC HERO SECTION --- */
+        /* Holographic Boot-up Reveal Animation */
+        .holo-reveal {
+            opacity: 0;
+            transform: translateY(50px) scale(0.95);
+            filter: blur(15px) brightness(2);
+            transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .holo-reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0) brightness(1);
+        }
+
+        /* --- EXTREME FUTURISTIC HERO --- */
         #home {
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-            overflow: hidden;
         }
 
-        /* Left Side: Text */
         .hero-content {
-            max-width: 550px;
-            z-index: 10;
+            max-width: 650px;
+            z-index: 20;
         }
 
         .hero-tagline {
+            font-family: 'Share Tech Mono', monospace;
             color: var(--secondary-silver);
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 5px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .hero-tagline::before {
-            content: '';
-            display: inline-block;
-            width: 30px;
-            height: 2px;
-            background: var(--primary-silver);
-            box-shadow: 0 0 10px #fff;
+            font-size: 14px; letter-spacing: 5px; margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            display: inline-block; padding: 5px 15px;
+            background: rgba(255,255,255,0.05);
         }
 
         .hero-title {
-            font-size: 85px;
-            line-height: 0.95;
-            margin-bottom: 25px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 90px; line-height: 0.9; font-weight: 700;
             color: var(--primary-silver);
+            text-transform: uppercase; margin-bottom: 25px;
             text-shadow: 
-                1px 1px 0px #777, 
-                2px 2px 0px #666, 
-                3px 3px 0px #555, 
-                4px 4px 0px #444, 
-                5px 5px 0px #333,
-                0 0 40px rgba(255,255,255,0.3);
+                0 0 10px rgba(255,255,255,0.8),
+                0 0 20px rgba(255,255,255,0.4),
+                0 0 40px rgba(255,255,255,0.2);
         }
 
         .hero-subtitle {
-            font-size: 22px;
-            color: var(--text-main);
-            margin-bottom: 30px;
-            font-weight: 400;
-            letter-spacing: 2px;
-            border-left: 2px solid var(--secondary-silver);
-            padding-left: 15px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 18px; color: var(--primary-silver);
+            margin-bottom: 30px; letter-spacing: 3px;
+            display: flex; align-items: center; gap: 10px;
         }
+        .hero-subtitle::before {
+            content: '[ ]'; animation: blink 1s infinite alternate;
+        }
+        @keyframes blink { 0% { opacity: 0.2; } 100% { opacity: 1; } }
 
         .hero-desc {
-            font-size: 16px;
-            line-height: 1.8;
-            color: var(--text-muted);
-            margin-bottom: 40px;
+            font-size: 15px; line-height: 1.8; color: var(--text-muted);
+            margin-bottom: 50px; border-left: 2px solid var(--secondary-silver); padding-left: 20px;
         }
 
         .btn-primary {
-            padding: 18px 40px;
+            padding: 18px 45px;
             background: transparent;
             color: var(--primary-silver);
-            border: 2px solid var(--primary-silver);
-            border-radius: 4px;
+            border: 1px solid var(--secondary-silver);
             font-family: 'Rajdhani', sans-serif;
-            font-size: 18px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            cursor: pointer;
-            transition: 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            position: relative;
-            overflow: hidden;
-            box-shadow: inset 0 0 0 0 rgba(255, 255, 255, 0.1);
+            font-size: 18px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+            text-decoration: none; display: inline-block; transition: 0.4s;
+            position: relative; overflow: hidden;
+            clip-path: polygon(0 0, 100% 0, 100% 70%, 95% 100%, 0 100%);
+        }
+
+        .btn-primary::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
         }
 
         .btn-primary:hover {
-            background: var(--primary-silver);
-            color: var(--bg-color);
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
-            transform: translateY(-3px);
+            border-color: var(--primary-silver);
+            box-shadow: 0 0 30px rgba(255,255,255,0.2), inset 0 0 20px rgba(255,255,255,0.1);
         }
+        .btn-primary:hover::after { left: 100%; }
 
-        /* Right Side: Futuristic Hologram */
+        /* --- HOLOGRAPHIC PROFILE CORE --- */
         .hero-visual {
             position: relative;
-            width: 500px;
-            height: 500px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            perspective: 1000px;
+            width: 550px; height: 550px;
+            display: flex; justify-content: center; align-items: center;
         }
 
-        /* Rotating Radar Background */
-        .radar-bg {
-            position: absolute;
-            width: 600px;
-            height: 600px;
+        /* Targeting Reticle */
+        .reticle {
+            position: absolute; width: 100%; height: 100%;
+            border: 1px dashed rgba(255,255,255,0.1);
             border-radius: 50%;
-            background: conic-gradient(from 0deg, transparent 0deg, rgba(255,255,255,0.05) 90deg, transparent 90deg);
-            animation: rotateRadar 8s linear infinite;
-            z-index: 1;
+            animation: spinSlow 30s linear infinite;
         }
-
-        @keyframes rotateRadar {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .reticle::before, .reticle::after {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 110%; height: 1px; background: rgba(255,255,255,0.15);
+            transform: translate(-50%, -50%);
         }
+        .reticle::after { transform: translate(-50%, -50%) rotate(90deg); }
 
-        /* HUD Frame */
-        .hud-frame {
-            position: absolute;
-            width: 420px;
-            height: 420px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        /* Holographic Base */
+        .holo-base {
+            position: absolute; bottom: 20px; width: 400px; height: 60px;
             border-radius: 50%;
-            z-index: 2;
+            background: radial-gradient(ellipse, rgba(255,255,255,0.15) 0%, transparent 70%);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 0 50px rgba(255,255,255,0.1);
+            animation: pulseBase 3s infinite alternate;
         }
 
-        .hud-frame::before, .hud-frame::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--primary-silver);
-            box-shadow: 0 0 10px rgba(255,255,255,0.8);
+        @keyframes pulseBase {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.1); opacity: 1; }
         }
 
-        .hud-frame::before { top: -1px; left: 50%; transform: translateX(-50%); border-bottom: none; border-left: none; border-right: none; width: 40px;}
-        .hud-frame::after { bottom: -1px; left: 50%; transform: translateX(-50%); border-top: none; border-left: none; border-right: none; width: 40px;}
+        /* The Scanning Ring */
+        .scanner {
+            position: absolute; width: 380px; height: 380px;
+            border-radius: 50%; border: 2px solid transparent;
+            border-top-color: #fff; border-right-color: rgba(255,255,255,0.3);
+            animation: spinFast 4s linear infinite;
+            z-index: 15;
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
 
-        .profile-img-container {
+        /* Profile Image Container */
+        .profile-frame {
             position: relative;
-            width: 340px;
-            height: 340px;
+            width: 320px; height: 320px;
             border-radius: 50%;
-            z-index: 5;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(5px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 30px rgba(255,255,255,0.1);
+            padding: 8px;
+            background: radial-gradient(circle, rgba(0,0,0,0.8) 40%, rgba(255,255,255,0.1) 100%);
+            border: 1px solid var(--border-color);
+            z-index: 10;
+            box-shadow: 0 0 80px rgba(0,0,0,0.9), inset 0 0 30px rgba(255,255,255,0.2);
+        }
+
+        .profile-frame::before {
+            content: ''; position: absolute; top: -5px; left: -5px; right: -5px; bottom: -5px;
+            border-radius: 50%; border: 2px solid transparent;
+            border-bottom-color: #fff; border-left-color: #fff;
+            animation: spinSlow 8s linear infinite;
         }
 
         .profile-img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            object-position: top center;
-            filter: grayscale(20%) contrast(110%);
+            width: 100%; height: 100%; border-radius: 50%;
+            object-fit: cover; object-position: center 20%;
+            filter: contrast(120%) brightness(90%) grayscale(30%);
+            transition: 0.5s;
+        }
+        .profile-frame:hover .profile-img { filter: contrast(100%) brightness(100%) grayscale(0%); }
+
+        /* Floating Data Nodes */
+        .data-node {
+            position: absolute; width: 12px; height: 12px;
+            background: #fff; box-shadow: 0 0 20px #fff;
+            transform: rotate(45deg);
+            animation: floatNode 4s infinite ease-in-out alternate;
+        }
+        .node-1 { top: 15%; left: 10%; animation-delay: 0s; }
+        .node-2 { bottom: 20%; right: 15%; animation-delay: -1s; }
+        .node-3 { top: 40%; right: 5%; animation-delay: -2s; }
+        .node-4 { bottom: 10%; left: 30%; animation-delay: -3s; }
+
+        @keyframes floatNode {
+            0% { transform: translateY(0) rotate(45deg) scale(1); opacity: 0.5; }
+            100% { transform: translateY(-30px) rotate(135deg) scale(1.5); opacity: 1; }
         }
 
-        /* Orbiting Elements */
-        .orbit {
-            position: absolute;
-            border-radius: 50%;
-            border: 1px dashed rgba(255, 255, 255, 0.3);
-            z-index: 3;
-            animation: spinOrbit 20s linear infinite;
-        }
-        
-        .orbit-1 { width: 460px; height: 460px; }
-        
-        .orbit-2 {
-            width: 520px; 
-            height: 520px; 
-            animation: spinOrbitReverse 25s linear infinite;
-            border: 1px dotted rgba(255, 255, 255, 0.1);
-        }
+        @keyframes spinSlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spinFast { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .orbit-node {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 15px 5px rgba(255,255,255,0.6);
-        }
-
-        .orbit-1 .orbit-node { top: 10%; left: 10%; }
-        .orbit-2 .orbit-node { bottom: 20%; right: 5%; }
-
-        @keyframes spinOrbit {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes spinOrbitReverse {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(-360deg); }
-        }
-
-        /* Banner inside About Section */
-        .about-banner {
-            width: 100%;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            display: block;
-        }
-
-        /* --- Rest of the Sections (Cards, Timeline, etc.) --- */
+        /* --- HOLOGRAPHIC PANELS (CARDS) --- */
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
         .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
 
-        .card {
-            background: var(--surface-color);
-            backdrop-filter: blur(10px);
+        .holo-panel {
+            background: var(--panel-bg);
+            backdrop-filter: blur(20px);
             border: 1px solid var(--border-color);
-            padding: 30px;
-            border-radius: 8px;
-            transition: all 0.4s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 35px;
+            position: relative;
+            transition: 0.4s;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
         }
 
-        .card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.05);
+        /* Corner Brackets */
+        .holo-panel::before, .holo-panel::after {
+            content: ''; position: absolute; width: 15px; height: 15px; transition: 0.4s;
+        }
+        .holo-panel::before { top: 0; left: 0; border-top: 2px solid var(--secondary-silver); border-left: 2px solid var(--secondary-silver); }
+        .holo-panel::after { bottom: 0; right: 0; border-bottom: 2px solid var(--secondary-silver); border-right: 2px solid var(--secondary-silver); }
+
+        .holo-panel:hover {
+            background: rgba(25, 25, 28, 0.95);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(255,255,255,0.05);
+        }
+        .holo-panel:hover::before, .holo-panel:hover::after {
+            width: 100%; height: 100%; opacity: 0.3;
         }
 
-        .card h3 { font-size: 24px; margin-bottom: 15px; color: var(--primary-silver); }
-        .card p { color: var(--text-muted); font-size: 14px; line-height: 1.8; }
+        .holo-panel h3 {
+            font-family: 'Rajdhani', sans-serif; font-size: 24px;
+            color: var(--primary-silver); margin-bottom: 15px; letter-spacing: 2px;
+        }
+        .holo-panel p { color: var(--text-muted); font-size: 14px; line-height: 1.8; }
 
-        .tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+        /* Banner relocated and framed */
+        .about-banner-container {
+            margin-bottom: 50px;
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            background: rgba(0,0,0,0.5);
+            position: relative;
+        }
+        .about-banner-container::before {
+            content: 'IMG_FEED.SYS'; position: absolute; top: -10px; right: 20px;
+            background: #000; color: var(--secondary-silver); font-family: 'Share Tech Mono', monospace;
+            font-size: 10px; padding: 0 10px;
+        }
+        .about-banner { width: 100%; display: block; filter: grayscale(20%); }
+
+        /* Tech Tags */
+        .tags { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 25px; }
         .tag {
-            background: rgba(255, 255, 255, 0.05);
+            font-family: 'Share Tech Mono', monospace;
+            background: rgba(255, 255, 255, 0.03);
             color: var(--primary-silver);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
+            padding: 6px 15px; font-size: 12px;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: 0.3s;
+        }
+        .tag:hover {
+            background: var(--primary-silver); color: #000;
+            box-shadow: 0 0 15px rgba(255,255,255,0.4);
         }
 
-        /* Timeline */
-        .timeline { position: relative; max-width: 800px; margin: 0 auto; }
+        /* --- CYBER TIMELINE --- */
+        .timeline { position: relative; max-width: 900px; margin: 0 auto; }
         .timeline::after {
-            content: ''; position: absolute; width: 2px; background: linear-gradient(to bottom, transparent, #fff, transparent);
-            top: 0; bottom: 0; left: 20px;
+            content: ''; position: absolute; width: 2px; 
+            background: linear-gradient(to bottom, transparent, #fff, #fff, transparent);
+            top: 0; bottom: 0; left: 30px;
+            box-shadow: 0 0 15px #fff;
         }
 
         .timeline-item {
-            padding: 25px 30px;
-            background: var(--surface-color);
-            backdrop-filter: blur(10px);
+            padding: 30px; margin-bottom: 40px; margin-left: 70px;
+            background: var(--panel-bg);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            margin-bottom: 30px;
-            margin-left: 50px;
-            transition: 0.3s ease;
+            position: relative;
+            backdrop-filter: blur(10px);
+            transition: 0.4s;
         }
+        
+        .timeline-item:hover { border-color: var(--primary-silver); transform: translateX(10px); }
 
         .timeline-item::after {
-            content: ''; position: absolute; width: 16px; height: 16px; left: -38px;
-            background-color: var(--bg-color); border: 3px solid var(--primary-silver);
-            top: 30px; border-radius: 50%; z-index: 1; box-shadow: 0 0 15px #fff;
+            content: ''; position: absolute; left: -48px; top: 40px;
+            width: 14px; height: 14px;
+            background: #000; border: 2px solid var(--primary-silver);
+            transform: rotate(45deg); box-shadow: 0 0 15px #fff;
+            transition: 0.3s;
         }
+        .timeline-item:hover::after { background: #fff; }
 
-        .timeline-date { color: var(--secondary-silver); font-size: 13px; font-weight: 700; margin-bottom: 8px; }
-        .timeline-title { font-size: 22px; margin-bottom: 5px; color: var(--primary-silver); }
-        .timeline-subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 15px; font-weight: 600; }
+        .timeline-date {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--secondary-silver); font-size: 13px; letter-spacing: 2px; margin-bottom: 10px;
+        }
+        .timeline-title { font-family: 'Rajdhani', sans-serif; font-size: 24px; color: var(--primary-silver); margin-bottom: 5px; }
+        .timeline-subtitle { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; font-weight: 600; letter-spacing: 1px; }
         .timeline-desc { font-size: 14px; line-height: 1.8; color: var(--text-muted); }
 
-        /* Certifications */
+        /* --- CERTIFICATIONS --- */
         .cert-card {
-            display: flex; justify-content: space-between; align-items: center; padding: 25px;
-            background: var(--surface-color); backdrop-filter: blur(10px);
-            border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 25px 35px; background: var(--panel-bg);
+            border-left: 3px solid var(--secondary-silver);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            margin-bottom: 25px; transition: 0.4s;
+            backdrop-filter: blur(10px);
         }
-        .cert-info h4 { font-size: 20px; color: var(--primary-silver); margin-bottom: 5px; }
+        .cert-card:hover { border-left-color: #fff; background: rgba(30,30,30,0.9); transform: scale(1.02); }
+        .cert-info h4 { font-family: 'Rajdhani', sans-serif; font-size: 22px; color: var(--primary-silver); margin-bottom: 5px; }
         .cert-info p { font-size: 14px; color: var(--text-muted); }
-        .cert-id { font-size: 13px; color: var(--primary-silver); font-family: 'Share Tech Mono', monospace; background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px; }
-
-        /* Form */
-        input, textarea {
-            width: 100%; padding: 15px; background: rgba(0,0,0,0.5); 
-            border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 4px; margin-bottom: 20px;
+        .cert-id { 
+            font-family: 'Share Tech Mono', monospace; font-size: 14px; color: #000; 
+            background: var(--secondary-silver); padding: 8px 15px; font-weight: 700;
+            clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%, 0 30%);
         }
-        input:focus, textarea:focus { outline: none; border-color: #fff; box-shadow: 0 0 10px rgba(255,255,255,0.3); }
 
-        /* Footer */
+        /* --- CONTACT FORM --- */
+        input, textarea {
+            width: 100%; padding: 15px; margin-bottom: 25px;
+            background: rgba(0,0,0,0.6); border: 1px solid var(--border-color);
+            color: var(--primary-silver); font-family: 'Share Tech Mono', monospace;
+            transition: 0.3s;
+        }
+        input:focus, textarea:focus {
+            outline: none; border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2);
+            background: rgba(20,20,20,0.8);
+        }
+
+        /* --- FOOTER --- */
         footer {
             text-align: center; padding: 40px; border-top: 1px solid var(--border-color);
-            color: var(--secondary-silver); font-size: 14px; background: #000;
+            color: var(--secondary-silver); font-family: 'Share Tech Mono', monospace; font-size: 12px;
+            background: #000; letter-spacing: 2px;
         }
 
-        /* Responsive */
         @media (max-width: 992px) {
             #home { flex-direction: column; text-align: center; padding-top: 150px; }
-            .hero-content { margin-bottom: 60px; }
-            .hero-tagline { justify-content: center; }
-            .hero-subtitle { border-left: none; padding-left: 0; }
-            .hero-visual { transform: scale(0.7); margin-top: -50px; }
+            .hero-tagline { margin: 0 auto 20px auto; }
+            .hero-subtitle { justify-content: center; }
             .hero-title { font-size: 60px; }
+            .hero-visual { transform: scale(0.8); margin-top: 20px; }
             .grid-2 { grid-template-columns: 1fr; }
             .nav-links { display: none; }
-            .cert-card { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .timeline-item { margin-left: 50px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Moving Holographic Background -->
+    <div class="bg-container">
+        <div class="cyber-grid"></div>
+        <div class="scan-line"></div>
+    </div>
+
     <!-- Navigation -->
     <nav>
-        <div class="nav-logo">MD. RONI <span>MAHABUB</span></div>
+        <div class="nav-logo">MD.RONI <span>MAHABUB</span></div>
         <div class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#skills">Skills</a>
-            <a href="#experience">Experience</a>
-            <a href="#certs">Certifications</a>
-            <a href="#contact">Contact</a>
+            <a href="#home">SYS.HOME</a>
+            <a href="#about">SYS.ABOUT</a>
+            <a href="#skills">SYS.SKILLS</a>
+            <a href="#experience">SYS.EXP</a>
+            <a href="#certs">SYS.CERTS</a>
+            <a href="#contact">SYS.CONTACT</a>
         </div>
-        <a href="#" class="btn-resume">Resume</a>
+        <a href="#" class="btn-nav">DOWNLOAD.DAT</a>
     </nav>
 
-    <!-- FUTURISTIC HERO SECTION -->
-    <section id="home" class="page-section">
-        <div class="hero-content reveal">
-            <div class="hero-tagline">FUTURE-READY AI ENGINEER</div>
+    <!-- HOLOGRAPHIC HERO -->
+    <section id="home">
+        <div class="hero-content holo-reveal">
+            <div class="hero-tagline">// INITIALIZING PROTOCOL: AI_ENGINEER</div>
             <h1 class="hero-title">MD. RONI<br>MAHABUB</h1>
-            <div class="hero-subtitle">Generative AI | RAG | LLM Applications</div>
+            <div class="hero-subtitle">GENERATIVE AI | RAG | LLM ARCHITECTURE</div>
             <p class="hero-desc">
                 I am an AI Engineer specializing in Generative AI, Retrieval-Augmented Generation (RAG), LLM applications, Machine Learning, and Deep Learning. I build practical AI applications using modern LLM technologies.
             </p>
-            <a href="#about" class="btn-primary">Explore My Work</a>
+            <a href="#about" class="btn-primary">ACCESS TERMINAL</a>
         </div>
         
-        <div class="hero-visual reveal">
-            <!-- High-tech rotating radar and orbital rings -->
-            <div class="radar-bg"></div>
-            <div class="hud-frame"></div>
-            <div class="orbit orbit-1">
-                <div class="orbit-node"></div>
-            </div>
-            <div class="orbit orbit-2">
-                <div class="orbit-node"></div>
-            </div>
+        <div class="hero-visual holo-reveal">
+            <div class="reticle"></div>
+            <div class="holo-base"></div>
+            <div class="scanner"></div>
             
-            <!-- Your Profile Image -->
-            <div class="profile-img-container">
+            <div class="data-node node-1"></div>
+            <div class="data-node node-2"></div>
+            <div class="data-node node-3"></div>
+            <div class="data-node node-4"></div>
+
+            <div class="profile-frame">
                 <!-- Make sure your image is named profile.png or profile.jpg -->
-                <img src="profile.png" alt="Md. Roni Mahabub" class="profile-img" onerror="this.src='https://via.placeholder.com/340x340.png?text=Profile+Image'">
+                <img src="profile.png" alt="Md. Roni Mahabub" class="profile-img" onerror="this.src='https://via.placeholder.com/320x320.png?text=Profile+Image'">
             </div>
         </div>
     </section>
 
-    <!-- ABOUT SECTION (Now featuring your banner) -->
-    <section id="about" class="page-section">
-        <h2 class="section-title reveal">About Me</h2>
+    <!-- ABOUT SECTION -->
+    <section id="about">
+        <div class="section-header holo-reveal">
+            <h2 class="section-title">About Me</h2>
+        </div>
         
-        <!-- Your banner moved here as a featured graphic -->
-        <div class="reveal">
+        <div class="about-banner-container holo-reveal">
             <!-- Make sure your image is named banner.png or banner.jpg -->
-            <img src="banner.png" alt="Md. Roni Mahabub Banner" class="about-banner" onerror="this.style.display='none'">
+            <img src="banner.png" alt="Banner" class="about-banner" onerror="this.style.display='none'">
         </div>
 
         <div class="grid-2">
-            <div class="reveal">
-                <p style="color: var(--text-muted); line-height: 1.8; font-size: 16px; margin-bottom: 20px;">
+            <div class="holo-reveal">
+                <p style="color: var(--text-muted); line-height: 2; font-size: 15px; margin-bottom: 20px;">
                     My experience includes developing AI/ML solutions involving NLP, Computer Vision, predictive modeling, data analysis, and AI application deployment. I also have professional experience in AI/ML training and mentoring, which has strengthened my ability to explain technical concepts and build practical AI solutions.
                 </p>
-                <p style="color: var(--text-muted); line-height: 1.8; font-size: 16px;">
+                <p style="color: var(--text-muted); line-height: 2; font-size: 15px;">
                     Currently seeking opportunities as an AI Engineer, Generative AI Engineer, AI/ML Engineer, or Machine Learning Engineer.
                 </p>
             </div>
-            <div class="card reveal">
+            <div class="holo-panel holo-reveal">
                 <h3>Core Expertise</h3>
                 <div class="tags">
                     <span class="tag">Generative AI</span>
@@ -571,17 +591,18 @@
                     <span class="tag">Computer Vision</span>
                     <span class="tag">Python</span>
                     <span class="tag">FastAPI</span>
-                    <span class="tag">Git & GitHub</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="page-section" style="background-color: rgba(10, 10, 10, 0.6);">
-        <h2 class="section-title reveal">Technical Skills</h2>
+    <!-- SKILLS SECTION -->
+    <section id="skills">
+        <div class="section-header holo-reveal">
+            <h2 class="section-title">Technical Skills</h2>
+        </div>
         <div class="grid-3">
-            <div class="card reveal">
+            <div class="holo-panel holo-reveal">
                 <h3>AI & Machine Learning</h3>
                 <p style="margin-bottom: 15px;">Deep learning, NLP, predictive modeling, and intelligent system deployment.</p>
                 <div class="tags">
@@ -593,7 +614,7 @@
                     <span class="tag">NumPy</span>
                 </div>
             </div>
-            <div class="card reveal">
+            <div class="holo-panel holo-reveal">
                 <h3>Generative AI & LLMs</h3>
                 <p style="margin-bottom: 15px;">Building advanced AI applications and RAG architectures.</p>
                 <div class="tags">
@@ -604,7 +625,7 @@
                     <span class="tag">AWS</span>
                 </div>
             </div>
-            <div class="card reveal">
+            <div class="holo-panel holo-reveal">
                 <h3>Tools & Data Science</h3>
                 <p style="margin-bottom: 15px;">Data analysis, visualization, and model management.</p>
                 <div class="tags">
@@ -613,18 +634,19 @@
                     <span class="tag">Docker</span>
                     <span class="tag">MLflow</span>
                     <span class="tag">Matplotlib</span>
-                    <span class="tag">Seaborn</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Experience & Education Section -->
-    <section id="experience" class="page-section">
-        <h2 class="section-title reveal">Experience & Education</h2>
+    <!-- EXPERIENCE SECTION -->
+    <section id="experience">
+        <div class="section-header holo-reveal">
+            <h2 class="section-title">Experience & Education</h2>
+        </div>
         <div class="timeline">
             
-            <div class="timeline-item reveal">
+            <div class="timeline-item holo-reveal">
                 <div class="timeline-date">SEP 2026 - PRESENT</div>
                 <h3 class="timeline-title">AI Engineer</h3>
                 <div class="timeline-subtitle">E-Learning and Earning Ltd · Full-time</div>
@@ -633,7 +655,7 @@
                 </div>
             </div>
 
-            <div class="timeline-item reveal">
+            <div class="timeline-item holo-reveal">
                 <div class="timeline-date">JUN 2024 - JUN 2026</div>
                 <h3 class="timeline-title">AI Trainer</h3>
                 <div class="timeline-subtitle">Prime Tech Solutions Ltd. · Part-time</div>
@@ -642,7 +664,7 @@
                 </div>
             </div>
 
-            <div class="timeline-item reveal">
+            <div class="timeline-item holo-reveal">
                 <div class="timeline-date">AUG 2025 - NOV 2025</div>
                 <h3 class="timeline-title">Mentor</h3>
                 <div class="timeline-subtitle">Rajshahi University Research Society (RURS)</div>
@@ -651,7 +673,7 @@
                 </div>
             </div>
 
-            <div class="timeline-item reveal">
+            <div class="timeline-item holo-reveal">
                 <div class="timeline-date">JAN 2024 - MAY 2024</div>
                 <h3 class="timeline-title">Instructor</h3>
                 <div class="timeline-subtitle">ICT Division</div>
@@ -660,7 +682,7 @@
                 </div>
             </div>
 
-            <div class="timeline-item reveal">
+            <div class="timeline-item holo-reveal">
                 <div class="timeline-date">JAN 2023 - DEC 2023</div>
                 <h3 class="timeline-title">AI Engineer & Instructor</h3>
                 <div class="timeline-subtitle">Core Campus (YouTube)</div>
@@ -669,7 +691,7 @@
                 </div>
             </div>
 
-            <div class="timeline-item reveal">
+            <div class="timeline-item holo-reveal">
                 <div class="timeline-date">2018 - 2023</div>
                 <h3 class="timeline-title">B.Sc. in Computer Science and Engineering (CSE)</h3>
                 <div class="timeline-subtitle">Varendra University (VU), Rajshahi</div>
@@ -681,11 +703,13 @@
         </div>
     </section>
 
-    <!-- Certifications Section -->
-    <section id="certs" class="page-section" style="background-color: rgba(10, 10, 10, 0.6);">
-        <h2 class="section-title reveal">Certifications</h2>
+    <!-- CERTIFICATIONS SECTION -->
+    <section id="certs">
+        <div class="section-header holo-reveal">
+            <h2 class="section-title">Certifications</h2>
+        </div>
         
-        <div class="cert-card reveal">
+        <div class="cert-card holo-reveal">
             <div class="cert-info">
                 <h4>AI in Immersive Technology – Level 6 (360 Hours)</h4>
                 <p>National Skills Development Authority, NSDA (Issued Jun 2026)</p>
@@ -693,7 +717,7 @@
             <div class="cert-id">SOA-ICT-AIIT-L6-001098</div>
         </div>
 
-        <div class="cert-card reveal">
+        <div class="cert-card holo-reveal">
             <div class="cert-info">
                 <h4>Web Design and Development for Freelancing – Level 3</h4>
                 <p>National Skills Development Authority, NSDA (Issued May 2025)</p>
@@ -701,7 +725,7 @@
             <div class="cert-id">NSC-ICT-WDDF-L3-001727</div>
         </div>
 
-        <div class="cert-card reveal">
+        <div class="cert-card holo-reveal">
             <div class="cert-info">
                 <h4>Introduction to Generative AI Concepts</h4>
                 <p>Microsoft Learn (Issued Jun 2025)</p>
@@ -709,7 +733,7 @@
             <div class="cert-id">mdronimahabub-42714</div>
         </div>
 
-        <div class="cert-card reveal">
+        <div class="cert-card holo-reveal">
             <div class="cert-info">
                 <h4>Data Analysis with Python</h4>
                 <p>IBM (Issued Jun 2025)</p>
@@ -718,66 +742,65 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="page-section">
-        <h2 class="section-title reveal">Let's Connect</h2>
+    <!-- CONTACT SECTION -->
+    <section id="contact">
+        <div class="section-header holo-reveal">
+            <h2 class="section-title">Let's Connect</h2>
+        </div>
         <div class="grid-2">
-            <div class="reveal">
-                <p style="color: var(--text-muted); margin-bottom: 30px; line-height: 1.8; font-size: 16px;">
+            <div class="holo-reveal">
+                <p style="color: var(--text-muted); margin-bottom: 30px; line-height: 2; font-size: 15px;">
                     Open to AI opportunities, collaborations, and conversations. Reach out through the form or via LinkedIn.
                 </p>
                 <div style="margin-bottom: 20px;">
-                    <strong style="color: var(--primary-silver);">Location:</strong> <span style="color: var(--text-muted);">Rajshahi, Bangladesh</span>
+                    <strong style="color: var(--primary-silver); font-family: 'Share Tech Mono'; letter-spacing: 1px;">LOCATION:</strong> <span style="color: var(--text-muted);">Rajshahi, Bangladesh</span>
                 </div>
                 <div style="margin-bottom: 20px;">
-                    <strong style="color: var(--primary-silver);">LinkedIn:</strong> <a href="#" target="_blank" style="color:var(--primary-silver); text-decoration:underline;">linkedin.com/in/md-roni-mahabub</a>
+                    <strong style="color: var(--primary-silver); font-family: 'Share Tech Mono'; letter-spacing: 1px;">LINKEDIN:</strong> <a href="#" target="_blank" style="color:var(--primary-silver); text-decoration:underline;">linkedin.com/in/md-roni-mahabub</a>
                 </div>
                 <div>
-                    <strong style="color: var(--primary-silver);">GitHub:</strong> <a href="#" target="_blank" style="color:var(--primary-silver); text-decoration:underline;">github.com/mdronimahabub</a>
+                    <strong style="color: var(--primary-silver); font-family: 'Share Tech Mono'; letter-spacing: 1px;">GITHUB:</strong> <a href="#" target="_blank" style="color:var(--primary-silver); text-decoration:underline;">github.com/mdronimahabub</a>
                 </div>
             </div>
             
-            <div class="card reveal">
+            <div class="holo-panel holo-reveal">
                 <form action="#" method="POST">
-                    <input type="text" placeholder="Your Name" required>
-                    <input type="email" placeholder="Your Email" required>
-                    <textarea placeholder="Your Message" rows="4" required></textarea>
-                    <button type="submit" class="btn-primary" style="width: 100%;">Send Message</button>
+                    <input type="text" placeholder="ENTER_NAME" required>
+                    <input type="email" placeholder="ENTER_EMAIL" required>
+                    <textarea placeholder="ENTER_MESSAGE_PAYLOAD" rows="4" required></textarea>
+                    <button type="submit" class="btn-primary" style="width: 100%; clip-path: none;">TRANSMIT_DATA</button>
                 </form>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- FOOTER -->
     <footer>
-        <p>&copy; 2026 Md. Roni Mahabub. Crafted with a future-first mindset.</p>
+        <p>SYS.ONLINE // © 2026 MD. RONI MAHABUB // FUTURE_FIRST_MINDSET</p>
     </footer>
 
-    <!-- Smooth Scroll & Reveal Animations -->
+    <!-- Intersection Observer for Holographic Reveal -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Intersection Observer for smooth fade-in/up transitions
             const observerOptions = {
                 root: null,
                 rootMargin: '0px',
-                threshold: 0.15 // Triggers when 15% of the element is visible
+                threshold: 0.1 
             };
 
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('active');
-                        // Optional: observer.unobserve(entry.target); 
-                        // Uncomment above if you want it to animate only once
                     }
                 });
             }, observerOptions);
 
-            const revealElements = document.querySelectorAll('.reveal');
+            const revealElements = document.querySelectorAll('.holo-reveal');
             revealElements.forEach(el => observer.observe(el));
             
-            // Trigger the first section immediately on load
-            document.querySelectorAll('#home .reveal').forEach(el => el.classList.add('active'));
+            // Boot up home immediately
+            document.querySelectorAll('#home .holo-reveal').forEach(el => el.classList.add('active'));
         });
     </script>
 </body>
